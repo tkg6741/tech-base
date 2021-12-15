@@ -27,8 +27,7 @@ if(isset($_POST["編集submit"])){
   $results = $stmt->fetchAll();
   foreach ($results as $row){
    //番号とパスワードが一致した内容をフォームに呼び出す
-   if($row["id"]==$_POST["編集num"] 
-      && $row["password"]==($_POST["pass3"])){ 
+   if($row["id"]==$_POST["編集num"] && $row["password"]==($_POST["pass3"])){ 
     $編集name=$row["name"];
     $編集comment=$row["comment"];
     $編集pass=$row["password"];
@@ -57,15 +56,11 @@ if(isset($_POST["編集submit"])){
 <body>
 mission_5-1掲示板
 <form method="post" action="">
-<input type="text" name="name" placeholder="名前"
-       value=<?php if(!empty($編集name)){echo $編集name;}?>><br>
-<input type="text" name="comment" placeholder="コメント"
-       value=<?php if(!empty($編集comment)){echo $編集comment;}?>><br>
-<input type="password" name="pass1" placeholder="パスワード"
-       value=<?php if(!empty($編集pass)){echo $編集pass;}?>>
+<input type="text" name="name" placeholder="名前" value=<?php if(!empty($編集name)){echo $編集name;}?>><br>
+<input type="text" name="comment" placeholder="コメント" value=<?php if(!empty($編集comment)){echo $編集comment;}?>><br>
+<input type="password" name="pass1" placeholder="パスワード" value=<?php if(!empty($編集pass)){echo $編集pass;}?>>
 <input type="submit" name="送信submit" value="送信"><br>
-<input type="hidden" name="編集確定num" 
-       value=<?php if(!empty($編集flag)){echo $編集flag;}?>>
+<input type="hidden" name="編集確定num" value=<?php if(!empty($編集flag)){echo $編集flag;}?>>
 <input type="number" name="削除num" placeholder="削除対象番号"><br>
 <input type="password" name="pass2" placeholder="パスワード">
 <input type="submit" name="削除submit" value="削除"><br>
@@ -97,11 +92,7 @@ if(isset($_POST["送信submit"])){
   //編集フラグがない時は
   if(empty($_POST["編集確定num"])){  
    //新規書き込みをして、       
-   $sql =$pdo -> prepare
-                        ("INSERT INTO mission5 (name,comment,
-                         date,password) 
-                         VALUES (:name, :comment, 
-                                 :date, :password)");
+   $sql =$pdo -> prepare("INSERT INTO mission5 (name, comment, date, password) VALUES (:name, :comment, :date, :password)");
    $sql -> bindParam(":name", $name, PDO::PARAM_STR);
    $sql -> bindParam(":comment", $comment, PDO::PARAM_STR);
    $sql -> bindParam(":date", $date, PDO::PARAM_STR);
@@ -130,9 +121,7 @@ if(isset($_POST["送信submit"])){
     $date = date("Y/m/d H:i:s");
     $password = $_POST["pass1"];
     $id = $_POST["編集確定num"];
-    $sql = "UPDATE mission5 SET name=:name,comment=:comment,
-                                date=:date, password=:password 
-                                WHERE id=:id";
+    $sql = "UPDATE mission5 SET name=:name,comment=:comment, date=:date, password=:password WHERE id=:id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(":name", $name, PDO::PARAM_STR);
     $stmt->bindParam(":comment", $comment, PDO::PARAM_STR);
